@@ -1,0 +1,39 @@
+{% include 'header.html' %}
+
+<ul class="breadcrumb">
+  <li><a href="/">Catalog &#350;colar</a> <span class="divider">/</span></li>
+  <li><a href="/">Clasele Actuale</a> <span class="divider">/</span></li>
+  <li class="active">Adaug&#259; o Clas&#259; Nou&#259;</li>
+</ul>
+
+<form class="form-horizontal" action="adaugaclasa" method="post">
+
+	{% csrf_token %}
+
+	{% for field in form %}
+
+		{% if field.errors %}
+			<div class="alert alert-error">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+  				<strong>Aten&#355;ie!</strong> {{ field.errors }}
+			</div>
+		{% endif %}
+
+		<div class="control-group">
+    		<label class="control-label" for="id_{{ field.name }}">{{ field.label }}:</label>
+    		<div class="controls">
+      			{{ field }}
+    		</div>
+  		</div>	
+
+    {% endfor %}
+
+    <div class="control-group">
+    	<div class="controls">
+			<button type="submit" class="btn">Adaug&#259;</button>
+		</div>
+	</div>
+
+</form>
+
+{% include 'footer.html' %}

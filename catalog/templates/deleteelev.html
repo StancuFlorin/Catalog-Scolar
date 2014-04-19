@@ -1,0 +1,20 @@
+{% include 'header.html' %}
+
+<ul class="breadcrumb">
+  <li><a href="/">Catalog &#350;colar</a> <span class="divider">/</span></li>
+  <li><a href="/">Clasele Actuale</a> <span class="divider">/</span></li>
+  <li><a href="/veziclasa?id={{ elev.clasa.id }}">{{ elev.clasa.nume }}</a> <span class="divider">/</span></li>
+  <li><a href="/vezielev?id={{ elev.id }}">{{ elev.nume }} {{ elev.prenume }}</a> <span class="divider">/</span></li>
+  <li class="active">{{ title|safe }}</li>
+</ul>
+
+<div class="alert alert-block">
+  <h4>Aten&#355;ie!</h4>
+  E&#351;ti pe cale de a &#351;terge elevul <strong>{{ elev.nume }} {{ elev.prenume }}</strong> din clasa <strong>{{ elev.clasa.nume }}</strong> <i>{{ elev.clasa.an }}</i>. E&#351;ti sigur c&#259; vrei s&#259; faci asta?
+</div>
+<div class="btn-group" style="text-align: center;">
+    <a class="btn btn-danger" href="/stergeelev?id={{ elev.id }}&sigur=nu">NU</a>
+    <a class="btn" href="/stergeelev?id={{ elev.id }}&sigur=da">DA</a>
+</div>
+
+{% include 'footer.html' %}

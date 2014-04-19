@@ -1,0 +1,88 @@
+{% include 'header.html' %}
+
+<ul class="breadcrumb">
+  <li><a href="/">Catalog &#350;colar</a> <span class="divider">/</span></li>
+  <li><a href="/">Clasele Actuale</a> <span class="divider">/</span></li>
+  <li class="active">{{ clasa.nume }}</li>
+</ul>
+
+<div class="btn-group" style="float: left;">
+	<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
+		Export&#259; Medii Clas&#259;
+		<span class="caret"></span>
+	</a>
+	<ul class="dropdown-menu">
+		{% if clasa.status > 0 %}
+			<li><a href="/exportamedii?id={{ clasa.id }}&sem=1">Semestrul I</a></li>
+		{% endif %}
+		{% if clasa.status > 1 %}
+			<li><a href="/exportamedii?id={{ clasa.id }}&sem=2">Semestrul II</a></li>
+		{% endif %}
+		{% if clasa.status == 0 %}
+			<li style="color: red;">Inca nu s-a terminat niciun semestru.</li>
+		{% endif %}
+	</ul>
+</div>
+<div class="btn-group" style="float: right;">
+	<a class="btn btn-info" href="/modificaclasa?id={{ clasa.id }}">Modific&#259; Clasa</a>
+	<a class="btn btn-info" href="/adaugamaterie?id={{ clasa.id }}">Adaug&#259; Materie</a>
+	<a class="btn btn-info" href="/adaugaelev?id={{ clasa.id }}">Adaug&#259; Elev</a>
+</div>
+<div style="clear: both; margin-bottom: 10px;"></div>
+
+<table class="table table-bordered">
+	<tr>
+		<td width="100">Nume:</td>
+		<td>{{ clasa.nume }}</td>
+	</tr>
+	<tr>
+		<td>An &#351;colar:</td>
+		<td>{{ clasa.an }}</td>
+	</tr>
+	<tr>
+		<td>Profesor:</td>
+		<td>{{ clasa.profesor }}</td>
+	</tr>
+	{% if clasa.descriere != "" %}
+	<tr>
+		<td>Descriere:</td>
+		<td>{{ clasa.descriere }}</td>
+	</tr>
+	{% endif %}
+	<tr>
+		<td>Status:</td>
+		<td><i>{{ status }}</i></td>
+	</tr>
+	<tr>
+		<td>Elevi:</td>
+		<td>
+			<ol>
+				{% for elev in elevi %}
+					<li><a href="vezielev?id={{ elev.id }}">{{ elev.nume|upper }} {{ elev.prenume }}</a></li>
+				{% endfor %}
+			</ol>
+			{% if elevi|length == 0 %}
+				<div class="alert alert-error">
+					Nu ave&#355;i niciun elev ad&#259;ugat. Ad&#259;uga&#355;i unul folosind butonul din dreapta - sus.
+				</div>
+			{% endif %}
+		</td>
+	</tr>
+	<tr>
+		<td>Materii:</td>
+		<td>
+			<ol>
+				{% for materie in materii %}
+					<li><a href="/vezimaterie?id={{ materie.id }}">{{ materie.nume }}</a></li>
+				{% endfor %}
+			</ol>
+			{% if materii|length == 0 %}
+				<div class="alert alert-error">
+					Nu ave&#355;i nicio materie ad&#259;ugat&#259;. Ad&#259;uga&#355;i una folosind butonul din dreapta - sus.
+				</div>
+			{% endif %}
+		</td>
+	</tr>
+</table>
+
+{% include 'footer.html' %}

@@ -1,0 +1,108 @@
+{% include 'header.html' %}
+
+<ul class="breadcrumb">
+  <li><a href="/">Catalog &#350;colar</a> <span class="divider">/</span></li>
+  <li><a href="/">Clasele Actuale</a> <span class="divider">/</span></li>
+  <li><a href="/veziclasa?id={{ materie.clasa.id }}">{{ materie.clasa.nume }}</a> <span class="divider">/</span></li>
+  <li class="active">{{ materie.nume }}</li>
+</ul>
+
+<div class="btn-group" style="float: left;">
+	<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
+		Export&#259; Materie
+		<span class="caret"></span>
+	</a>
+	<ul class="dropdown-menu">
+		<li><a href="/exportamaterie?id={{ materie.id }}&sem=1">Semestrul I</a></li>
+		{% if materie.clasa.status > 0 %}
+			<li><a href="/exportamaterie?id={{ materie.id }}&sem=2">Semestrul II</a></li>
+		{% endif %}
+	</ul>
+</div>
+<div class="btn-group" style="float: right;">
+	<a class="btn btn-info" href="/modificamaterie?id={{ materie.id }}">Modific&#259; Materia</a>
+	<a class="btn btn-danger" href="/stergematerie?id={{ materie.id }}">Sterge Materie</a>
+</div>
+<div style="clear: both; margin-bottom: 10px;"></div>
+
+<table class="table table-bordered">
+	<tr>
+		<td width="100">Nume:</td>
+		<td>{{ materie.nume }}</td>
+	</tr>
+	<tr>
+		<td>Clasa</td>
+		<td><a href="/veziclasa?id={{ materie.clasa.id }}">{{ materie.clasa.nume }}</a> <small><i>({{ status }})</i></small></td>
+	</tr>
+	<tr>
+		<td>An &#351;colar:</td>
+		<td>{{ materie.clasa.an }}</td>
+	</tr>
+	<tr>
+		<td>Profesor</td>
+		<td>{{ materie.clasa.profesor }}</td>
+	</tr>
+	<tr>
+		<td>Note:</td>
+		<td>
+			<h4>Semestrul I</h4>
+			<table class="table table-bordered">
+				{% for elev in note1 %}
+					<tr>
+						<td><a href="/vezielev?id={{ elev.0.id }}">{{ elev.0.nume }} {{ elev.0.prenume }}</a></td>
+						<td>
+							{% if elev.1|length > 0 %}
+							<table class="table table-bordered">
+								<tr>
+								{% for nota in elev.1 %}
+									<td>{{ nota.nota }}</td>
+								{% endfor %}
+								</tr>
+								<tr>
+								{% for nota in elev.1 %}
+									<td>{{ nota.data }}</td>
+								{% endfor %}
+								</tr>
+							</table>
+							{% endif %}
+							{% if elev.1|length == 0 %}
+								<div class="alert alert-info">Momentan nu sunt note ad&#259;ugate!</div>
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
+			{% if materie.clasa.status > 0 %}
+			<h4>Semestrul II</h4>
+			<table class="table table-bordered">
+				{% for elev in note2 %}
+					<tr>
+						<td><a href="/vezielev?id={{ elev.0.id }}">{{ elev.0.nume }} {{ elev.0.prenume }}</a></td>
+						<td>
+							{% if elev.1|length > 0 %}
+							<table class="table table-bordered">
+								<tr>
+								{% for nota in elev.1 %}
+									<td>{{ nota.nota }}</td>
+								{% endfor %}
+								</tr>
+								<tr>
+								{% for nota in elev.1 %}
+									<td>{{ nota.data }}</td>
+								{% endfor %}
+								</tr>
+							</table>
+							{% endif %}
+							{% if elev.1|length == 0 %}
+								<div class="alert alert-info">Momentan nu sunt note ad&#259;ugate!</div>
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
+			{% endif %}
+		</td>
+	</tr>
+</table>
+
+{% include 'footer.html' %}

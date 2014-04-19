@@ -1,2 +1,2 @@
-Catalog-Scolar
+Catalog Scolar
 ==============

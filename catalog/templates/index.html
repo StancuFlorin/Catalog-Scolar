@@ -1,0 +1,29 @@
+{% include 'header.html' %}
+
+<p style="float: right;"><a class="btn btn-info" href="adaugaclasa">Adaug&#259; o Clas&#259;</a></p>
+<div style="clear: both;"></div>
+
+{% if clase|length > 0 %}
+	<table class="table table-striped">
+		<tr>
+			<td>Clasa</td>
+			<td>An &#351;colar</td>
+			<td>Profesor</td>
+		</tr>
+	{% for clasa in clase %}
+		<tr>
+			<td><a href="/veziclasa?id={{ clasa.id }}">{{ clasa.nume }}</a></td>
+			<td>{{ clasa.an }}</td>
+			<td>{{ clasa.profesor }}</td>
+		</tr>
+	{% endfor %}
+	</table>
+{% endif %}
+
+{% if clase|length == 0 %}
+<div class="alert alert-error">
+	Nu ave&#355;i nicio clas&#259; ad&#259;ugat&#259;. Ad&#259;uga&#355;i una folosind butonul din dreapta.
+</div>
+{% endif %}
+
+{% include 'footer.html' %}

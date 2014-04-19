@@ -1,0 +1,143 @@
+{% include 'header.html' %}
+
+<ul class="breadcrumb">
+  <li><a href="/">Catalog &#350;colar</a> <span class="divider">/</span></li>
+  <li><a href="/">Clasele Actuale</a> <span class="divider">/</span></li>
+  <li><a href="/veziclasa?id={{ elev.clasa.id }}">{{ elev.clasa.nume }}</a> <span class="divider">/</span></li>
+  <li class="active">{{ elev.nume|upper }} {{ elev.prenume }}</li>
+</ul>
+
+<div class="btn-group" style="float: right;">
+	<a class="btn btn-danger" href="/stergeelev?id={{ elev.id }}">&#350;terge Elev</a>
+	<a class="btn btn-info" href="/modificaelev?id={{ elev.id }}">Modific&#259; Elev</a>
+	<a class="btn btn-info" href="/adauganota?id={{ elev.id }}">Adaug&#259; Not&#259;</a>
+</div>
+<div style="clear: both; margin-bottom: 10px;"></div>
+
+<table class="table table-bordered">
+	<tr>
+		<td width="150">Nume:</td>
+		<td>{{ elev.nume }} {{ elev.prenume }}</td>
+	</tr>
+	<tr>
+		<td>Clasa:</td>
+		<td><a href="/veziclasa?id={{ elev.clasa.id }}">{{ elev.clasa.nume }}</a></td>
+	</tr>
+	<tr>
+		<td>An &#351;colar:</td>
+		<td>{{ elev.clasa.an }}</td>
+	</tr>
+	<tr>
+		<td>Profesor:</td>
+		<td>{{ elev.clasa.profesor }}</td>
+	</tr>
+	{% if elev.clasa.status == 2 %}
+	<tr>
+		<td>Media Anual&#259;:</td>
+		<td><span class="label label-info">{{ mediean }}</span></td>
+	</tr>
+	{% endif %}
+	<tr>
+		<td>Situa&#355;ia &#350;colar&#259;:</td>
+		<td>
+			<h4>Semestrul I</h4>
+			<table class="table table-bordered">
+				{% for materie in semestrul1 %}
+					<tr>
+						<td width="100">
+							<a href="/vezimaterie?id={{ materie.0.id }}">{{ materie.0.nume }}</a>
+							{% if materie.1|length > 0 %}
+								<br/><br/><a href="/exportgraficmaterie?id={{ materie.0.id }}&elev={{ elev.id }}&semestru=1" class="btn btn-small btn-info">Export</a>
+							{% endif %}
+						</td>
+						<td>
+							{% if materie.1|length > 0 %}
+								<table class="table table-bordered">
+									<tr>
+										{% for nota in materie.1 %}
+											<td>
+												{{ nota.nota }}
+												<a href="/stergenota?id={{ nota.id }}" class="btn btn-mini btn-danger" style="float: right;">x</a>
+											</td>
+										{% endfor %}
+									</tr>
+									<tr>
+										{% for nota in materie.1 %}
+											<td>{{ nota.data }}</td>
+										{% endfor %}
+									</tr>
+								</table>
+								{% if elev.clasa.status >= 1 %}
+									<p style="text-align: right;">
+										Medie: <span class="label label-success">{{ materie.2 }}</span>
+									</p>
+								{% endif %}
+							{% endif %}
+
+							{% if materie.1|length == 0 %}
+								<div class="alert alert-info">Momentan nu sunt note ad&#259;ugate!</div>
+							{% endif %}
+						</td>
+					</tr>	
+				{% endfor %}
+				{% if elev.clasa.status >= 1 %}
+				<tr>
+					<td>Medie Semestrul I:</td>
+					<td><span class="label label-important">{{ medie1 }}</span></td>
+				</tr>
+				{% endif %}
+			</table>
+			{% if elev.clasa.status != 0 %}
+			<h4>Semestrul II</h4>
+			<table class="table table-bordered">
+				{% for materie in semestrul2 %}
+					<tr>
+						<td width="100">
+							<a href="/vezimaterie?id={{ materie.0.id }}">{{ materie.0.nume }}</a>
+							{% if materie.1|length > 0 %}
+								<br/><br/><a href="/exportgraficmaterie?id={{ materie.0.id }}&elev={{ elev.id }}&semestru=2" class="btn btn-small btn-info">Export</a>
+							{% endif %}
+						</td>
+						<td>
+							{% if materie.1|length > 0 %}
+								<table class="table table-bordered">
+									<tr>
+										{% for nota in materie.1 %}
+											<td>
+												{{ nota.nota }}
+												<a href="/stergenota?id={{ nota.id }}" class="btn btn-mini btn-danger" style="float: right;">x</a>
+											</td>
+										{% endfor %}
+									</tr>
+									<tr>
+										{% for nota in materie.1 %}
+											<td>{{ nota.data }}</td>
+										{% endfor %}
+									</tr>
+								</table>
+								{% if elev.class.status == 2 %}
+									<p style="text-align: right;">
+										Medie: <span class="label label-success">{{ materie.2 }}</span>
+									</p>
+								{% endif %}
+							{% endif %}
+
+							{% if materie.1|length == 0 %}
+								<div class="alert alert-info">Momentan nu sunt note ad&#259;ugate!</div>
+							{% endif %}
+						</td>
+					</tr>	
+				{% endfor %}
+				{% if elev.clasa.status == 2 %}
+				<tr>
+					<td>Medie Semestrul II:</td>
+					<td><span class="label label-important">{{ medie2 }}</span></td>
+				</tr>
+				{% endif %}
+			</table>
+			{% endif %}
+		</td>
+	</tr>
+</table>
+
+{% include 'footer.html' %}

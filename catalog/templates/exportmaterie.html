@@ -1,0 +1,45 @@
+<style>
+	p {
+		font-size: 14px;
+		margin: 0px;
+		padding: 0px;
+	}
+	td {
+		font-size: 14px;
+	}
+</style>
+
+<p style="font-size: 10px;">Scoala Generala Petre Badea<br/>Localitatea Negrasi, Judetul Arges</p>
+
+<h1 style="text-align: center; font-size: 24px;">Situatia Scolara la {{ materie.nume }}</h1>
+
+<p>Disciplina: {{ materie.nume }}</p>
+<p>{{ materie.clasa.nume }}</p>
+<p>Invatator: {{ materie.clasa.profesor }}</p>
+<p>An scolar: {{ materie.clasa.an }}</p>
+<p>Semestrul {{ semestru }}</p>
+
+<table cellpadding="4" cellspacing="4" border="1" style="margin-top: 20px;">
+	<tr>
+		<td align="center">Nume Elev</td>
+		<td align="center">Note Elev</td>
+	</tr>
+	{% for elev in note %}
+		<tr>
+			<td width="100">{{ elev.0.nume }} {{ elev.0.prenume }}</td>
+			<td>
+			<table cellpadding="5" cellspacing="5" border="1">
+				<tr>
+				{% for nota in elev.1 %}
+					<td align="center">{{ nota.nota }}</td>
+				{% endfor %}
+				</tr><tr>
+				{% for nota in elev.1 %}
+					<td>{{ nota.data }}</td>
+				{% endfor %}
+				</tr>
+			</table>
+			</td>
+		</tr>
+	{% endfor %}
+</table>

@@ -1,0 +1,22 @@
+{% include 'header.html' %}
+
+<ul class="breadcrumb">
+  <li><a href="/">Catalog &#350;colar</a> <span class="divider">/</span></li>
+  <li><a href="/">Clasele Actuale</a> <span class="divider">/</span></li>
+  <li><a href="/veziclasa?id={{ nota.elev.clasa.id }}">{{ nota.elev.clasa.nume }}</a> <span class="divider">/</span></li>
+  <li><a href="/vezielev?id={{ nota.elev.id }}">{{ nota.elev.nume }} {{ nota.elev.prenume }}</a> <span class="divider">/</span></li>
+  <li><a href="/vezimaterie?id={{ nota.materie.id }}">{{ nota.materie.nume }}</a> <span class="divider">/</span></li>
+  <li class="active">{{ title|safe }}</li>
+</ul>
+
+<div class="alert alert-block">
+  <h4>Aten&#355;ie!</h4>
+  E&#351;ti pe cale de a &#351;terge nota <strong>{{ nota.nota }}</strong> atribut&#259; la data de <i>{{ nota.data }}</i> la materia <strong>{{ nota.materie.nume }}</strong> a elevului <strong>{{ nota.elev.nume }} {{ nota.elev.prenume }}</strong>.
+  <br/>E&#351;ti sigur c&#259; vrei s&#259; faci asta?
+</div>
+<div class="btn-group" style="text-align: center;">
+    <a class="btn btn-danger" href="/stergenota?id={{ nota.id }}&sigur=nu">NU</a>
+    <a class="btn" href="/stergenota?id={{ nota.id }}&sigur=da">DA</a>
+</div>
+
+{% include 'footer.html' %}
